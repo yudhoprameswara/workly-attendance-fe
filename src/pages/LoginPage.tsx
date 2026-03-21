@@ -1,13 +1,21 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { LogIn, Lock, User, AlertCircle, LoaderCircle, BriefcaseBusiness, UsersRound } from 'lucide-react';
-import api from '../api/axios';
-import { useAuthStore } from '../store/authStore';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import {
+  LogIn,
+  Lock,
+  User,
+  AlertCircle,
+  LoaderCircle,
+  BriefcaseBusiness,
+  UsersRound,
+} from "lucide-react";
+import api from "../api/axios";
+import { useAuthStore } from "../store/authStore";
 
 const LoginPage = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
@@ -16,14 +24,17 @@ const LoginPage = () => {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setError('');
+    setError("");
 
     try {
-      const response = await api.post('/auth/login', { username, password });
+      const response = await api.post("/auth/login", { username, password });
       setAuth(response.data.access_token, response.data.user);
-      navigate('/dashboard');
+      navigate("/dashboard");
     } catch (err: any) {
-      setError(err.response?.data?.message || 'Login gagal, cek koneksi atau akun anda');
+      setError(
+        err.response?.data?.message ||
+          "Login gagal, cek koneksi atau akun anda",
+      );
     } finally {
       setLoading(false);
     }
@@ -32,7 +43,6 @@ const LoginPage = () => {
   return (
     <div className="min-h-screen bg-neutral-50 flex items-center justify-center p-0 md:p-6 lg:p-10 font-sans">
       <div className="flex w-full max-w-[1400px] h-full md:h-[90vh] bg-white md:rounded-3xl shadow-2xl shadow-blue-500/10 overflow-hidden">
-        
         <div className="hidden lg:flex lg:w-3/5 bg-blue-600 p-12 lg:p-20 flex-col justify-between text-white relative overflow-hidden">
           <div className="absolute -bottom-20 -left-20 w-80 h-80 bg-blue-500/40 rounded-full blur-3xl"></div>
           <div className="absolute top-20 right-20 w-60 h-60 bg-blue-700 rounded-full blur-3xl"></div>
@@ -40,7 +50,9 @@ const LoginPage = () => {
             <div className="bg-white/10 p-3 rounded-2xl backdrop-blur-sm border border-white/20">
               <UsersRound className="text-white" size={28} />
             </div>
-            <h1 className="text-2xl font-bold tracking-tight">Workly<span className='font-light opacity-80'>Attendance</span></h1>
+            <h1 className="text-2xl font-bold tracking-tight">
+              Workly<span className="font-light opacity-80">Attendance</span>
+            </h1>
           </div>
 
           <div className="relative z-10">
@@ -48,7 +60,9 @@ const LoginPage = () => {
               Sistem Presensi Karyawan Modern.
             </h2>
             <p className="text-xl text-blue-100 max-w-xl leading-relaxed font-light">
-              Kelola kehadiran, izin, dan laporan presensi tim kamu secara real-time dengan mudah dan transparan dalam satu platform terintegrasi.
+              Kelola kehadiran, izin, dan laporan presensi tim kamu secara
+              real-time dengan mudah dan transparan dalam satu platform
+              terintegrasi.
             </p>
           </div>
 
@@ -57,21 +71,28 @@ const LoginPage = () => {
               <BriefcaseBusiness className="text-white" size={20} />
             </div>
             <div>
-              <p className="font-semibold text-white">Efisiensi Tim Meningkat</p>
-              <p className="text-sm text-blue-200">User kami melaporkan penghematan waktu hingga 40%.</p>
+              <p className="font-semibold text-white">
+                Efisiensi Tim Meningkat
+              </p>
+              <p className="text-sm text-blue-200">
+                User kami melaporkan penghematan waktu hingga 40%.
+              </p>
             </div>
           </div>
         </div>
 
         <div className="flex-1 w-full flex items-center justify-center p-8 md:p-12 xl:p-20 bg-white">
           <div className="w-full max-w-[420px]">
-            
             <div className="mb-12 text-center lg:text-left">
               <div className="lg:hidden bg-blue-100 w-20 h-20 rounded-3xl flex items-center justify-center mx-auto mb-6">
                 <UsersRound className="text-blue-600" size={40} />
               </div>
-              <h2 className="text-4xl font-extrabold text-neutral-900 tracking-tighter mb-3">Selamat Datang</h2>
-              <p className="text-lg text-neutral-600 font-light">Masukkan akun karyawan untuk memulai presensi hari ini.</p>
+              <h2 className="text-4xl font-extrabold text-neutral-900 tracking-tighter mb-3">
+                Selamat Datang
+              </h2>
+              <p className="text-lg text-neutral-600 font-light">
+                Masukkan akun karyawan untuk memulai presensi hari ini.
+              </p>
             </div>
 
             {error && (
@@ -84,10 +105,15 @@ const LoginPage = () => {
               </div>
             )}
 
-            <form onSubmit={handleLogin} className="space-y-6" autoComplete='off'>
-              
+            <form
+              onSubmit={handleLogin}
+              className="space-y-6"
+              autoComplete="off"
+            >
               <div>
-                <label className="block text-sm font-semibold text-neutral-700 mb-2">Username Karyawan</label>
+                <label className="block text-sm font-semibold text-neutral-700 mb-2">
+                  Username Karyawan
+                </label>
                 <div className="relative group">
                   <span className="absolute inset-y-0 left-0 pl-4 flex items-center text-neutral-400 group-focus-within:text-blue-600 transition-colors">
                     <User size={20} />
@@ -106,8 +132,9 @@ const LoginPage = () => {
 
               <div>
                 <div className="flex items-center justify-between mb-2">
-                  <label className="text-sm font-semibold text-neutral-700">Kata Sandi</label>
-                  {/* <a href="#" className="text-xs text-blue-600 hover:text-blue-800 hover:underline">Lupa sandi?</a> */}
+                  <label className="text-sm font-semibold text-neutral-700">
+                    Kata Sandi
+                  </label>
                 </div>
                 <div className="relative group">
                   <span className="absolute inset-y-0 left-0 pl-4 flex items-center text-neutral-400 group-focus-within:text-blue-600 transition-colors">
@@ -144,7 +171,13 @@ const LoginPage = () => {
             </form>
 
             <p className="text-center text-sm text-neutral-500 mt-12">
-              Belum punya akun? <span className='text-blue-600 font-medium'>Hubungi HRD</span>
+              Belum punya akun?{" "}
+              <button
+                onClick={() => navigate("/register")}
+                className="text-blue-600 font-bold hover:underline"
+              >
+                Daftar Sekarang
+              </button>
             </p>
           </div>
         </div>

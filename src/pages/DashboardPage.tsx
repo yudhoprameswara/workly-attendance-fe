@@ -219,7 +219,7 @@ const DashboardPage = () => {
     const diffInMs = now.getTime() - checkInDate.getTime();
     const diffInMinutes = Math.floor(diffInMs / (1000 * 60));
 
-    return diffInMinutes >= 60;
+    return diffInMinutes >= 1;
   };
 
   useEffect(() => {

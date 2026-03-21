@@ -113,7 +113,6 @@ const CalendarView: React.FC<CalendarViewProps> = ({ data }) => {
           position: relative;
         }
 
-        /* Styling Hari Libur (Weekend) */
         .weekend-tile {
           color: #ef4444 !important;
         }

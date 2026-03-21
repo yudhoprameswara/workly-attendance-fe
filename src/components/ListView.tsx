@@ -89,7 +89,6 @@ const ListView: React.FC<ListViewProps> = ({ data = [] }) => {
               </div>
             </div>
 
-            {/* Sisi Kanan: Meta & Status */}
             <div className="flex items-center justify-between md:justify-end gap-6 border-t md:border-t-0 pt-4 md:pt-0 border-neutral-50">
               <div className="space-y-1.5 md:text-right">
                 <div className="flex items-center md:justify-end gap-1.5 text-neutral-400">

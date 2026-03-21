@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Outlet, NavLink, useNavigate } from "react-router-dom";
 import {
   LayoutDashboard,
@@ -8,16 +8,21 @@ import {
   X,
   UsersRound,
   Bell,
+  UserCog,
+  Calendar,
 } from "lucide-react";
 import { useAuthStore } from "../store/authStore";
-
+import ChangePasswordModal from "../components/ChangePasswordModal";
 
 const DashboardLayout = () => {
-    const user = useAuthStore((state) => state.user);
-    user.avatar =
-      user?.avatar ||
-      `https://ui-avatars.com/api/?name=${encodeURIComponent(user?.name || "User")}&background=0D8ABC&color=fff`;
-      
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [isChangePwdOpen, setIsChangePwdOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const user = useAuthStore((state) => state.user);
+  user.avatar =
+    user?.avatar ||
+    `https://ui-avatars.com/api/?name=${encodeURIComponent(user?.name || "User")}&background=0D8ABC&color=fff`;
+
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const logout = useAuthStore((state) => state.logout);
   const navigate = useNavigate();
@@ -31,6 +36,28 @@ const DashboardLayout = () => {
     { name: "Ringkasan", path: "/dashboard", icon: LayoutDashboard },
     { name: "Presensi Saya", path: "/attendance", icon: UserCheck },
   ];
+
+  if (user?.role === "admin") {
+    navItems.push({ name: "User Managmenet", path: "/admin", icon: UserCog });
+    navItems.push({
+      name: "Attendance Menu",
+      path: "/attendance-admin",
+      icon: Calendar,
+    });
+  }
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setIsProfileOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   return (
     <div className="min-h-screen bg-neutral-50 flex font-sans">
@@ -88,14 +115,6 @@ const DashboardLayout = () => {
             ))}
           </nav>
         </div>
-
-        <button
-          onClick={handleLogout}
-          className="flex items-center gap-4 px-4 py-3 rounded-xl text-base font-medium text-red-600 hover:bg-red-50 transition-colors w-full"
-        >
-          <LogOut size={22} className="text-red-500" />
-          Keluar Aplikasi
-        </button>
       </aside>
 
       <div className="flex-1 flex flex-col">
@@ -117,18 +136,55 @@ const DashboardLayout = () => {
               <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full border border-white"></span>
             </button> */}
 
-            <div className="flex items-center gap-3">
-              <div className="text-right hidden sm:block">
-                <p className="font-semibold text-sm text-neutral-950">
-                  {user.name}
-                </p>
-                <p className="text-xs text-neutral-500">{user.role}</p>
-              </div>
-              <img
-                src={user.avatar}
-                alt="Avatar"
-                className="w-10 h-10 rounded-full border border-neutral-200"
-              />
+            <div className="relative" ref={dropdownRef}>
+              <button
+                onClick={() => setIsProfileOpen(!isProfileOpen)}
+                className="flex items-center gap-3 hover:bg-neutral-50 p-1.5 rounded-2xl transition-all border border-transparent hover:border-neutral-200"
+              >
+                <div className="text-right hidden sm:block">
+                  <p className="font-semibold text-sm text-neutral-950">
+                    {user.name}
+                  </p>
+                  <p className="text-xs text-neutral-500">{user.title}</p>
+                </div>
+                <img
+                  src={user.avatar}
+                  alt="Avatar"
+                  className="w-10 h-10 rounded-full border-2 border-white shadow-sm"
+                />
+              </button>
+
+              {isProfileOpen && (
+                <div className="absolute right-0 mt-2 w-56 bg-white border border-neutral-200 rounded-2xl shadow-xl z-50 overflow-hidden animate-in fade-in zoom-in duration-150 origin-top-right">
+                  <div className="p-4 border-b border-neutral-100 bg-neutral-50/50">
+                    <p className="text-sm font-bold text-neutral-900">
+                      {user.name}
+                    </p>
+                    <p className="text-xs text-neutral-500 truncate">
+                      {user.email}
+                    </p>
+                  </div>
+                  <div className="p-2">
+                    <button
+                      onClick={() => {
+                        setIsChangePwdOpen(true);
+                        setIsProfileOpen(false);
+                      }}
+                      className="w-full flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-neutral-700 hover:bg-blue-50 hover:text-blue-700 rounded-xl transition-colors"
+                    >
+                      <UserCog size={18} />
+                      Ganti Password
+                    </button>
+                    <button
+                      onClick={handleLogout}
+                      className="w-full flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-red-600 hover:bg-red-50 rounded-xl transition-colors"
+                    >
+                      <LogOut size={18} />
+                      Keluar
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </header>
@@ -137,6 +193,10 @@ const DashboardLayout = () => {
           <Outlet />
         </main>
       </div>
+      <ChangePasswordModal
+        isOpen={isChangePwdOpen}
+        onClose={() => setIsChangePwdOpen(false)}
+      />
     </div>
   );
 };

@@ -24,7 +24,7 @@ const CameraModal: React.FC<CameraModalProps> = ({ isOpen, onClose, onCapture })
   const startCamera = async () => {
     try {
       const mediaStream = await navigator.mediaDevices.getUserMedia({
-        video: { facingMode: "user" }, // Kamera depan
+        video: { facingMode: "user" }, 
         audio: false,
       });
       setStream(mediaStream);
@@ -66,7 +66,6 @@ const CameraModal: React.FC<CameraModalProps> = ({ isOpen, onClose, onCapture })
     <div className="fixed inset-0 z-[999] bg-black/90 flex flex-col items-center justify-center p-4 backdrop-blur-sm">
       <div className="relative w-full max-w-md bg-neutral-900 rounded-3xl overflow-hidden shadow-2xl border border-white/10">
         
-        {/* Header */}
         <div className="absolute top-4 left-0 right-0 z-10 flex justify-between px-6">
           <span className="text-white/80 font-medium text-sm bg-black/40 px-3 py-1 rounded-full backdrop-blur-md">
             Ambil Selfie Presensi
@@ -76,7 +75,6 @@ const CameraModal: React.FC<CameraModalProps> = ({ isOpen, onClose, onCapture })
           </button>
         </div>
 
-        {/* Video Preview */}
         <div className="relative aspect-[3/4] bg-neutral-800 flex items-center justify-center">
           {error ? (
             <div className="text-center p-6">
@@ -90,13 +88,12 @@ const CameraModal: React.FC<CameraModalProps> = ({ isOpen, onClose, onCapture })
               ref={videoRef}
               autoPlay
               playsInline
-              className="w-full h-full object-cover mirror" // mirror class untuk efek cermin
+              className="w-full h-full object-cover mirror"
               style={{ transform: "scaleX(-1)" }} 
             />
           )}
         </div>
 
-        {/* Action Button */}
         <div className="p-8 flex justify-center bg-neutral-900">
           <button
             onClick={takePhoto}
