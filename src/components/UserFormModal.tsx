@@ -148,7 +148,6 @@ const UserFormModal = ({
                   className="w-full px-4 py-3 bg-neutral-50 border-transparent focus:bg-white focus:border-blue-200 rounded-2xl text-sm font-bold text-neutral-600 outline-none border transition-all cursor-pointer"
                   value={formData.role}
                   onChange={(e) =>{
-                    console.log(e.target.value)
                     setFormData({ ...formData, role: e.target.value })}
                   }
                 >

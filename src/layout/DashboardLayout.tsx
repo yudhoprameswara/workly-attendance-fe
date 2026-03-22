@@ -126,9 +126,7 @@ const DashboardLayout = () => {
             <Menu size={24} className="text-neutral-700" />
           </button>
 
-          <h2 className="hidden md:block text-2xl font-semibold text-neutral-900 tracking-tight">
-            Dashboard
-          </h2>
+            <div></div>
 
           <div className="flex items-center gap-6">
             {/* <button className="relative p-2 text-neutral-500 hover:text-neutral-900 rounded-full hover:bg-neutral-100">
