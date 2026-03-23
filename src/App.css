@@ -40,3 +40,15 @@
 .read-the-docs {
   color: #888;
 }
+
+
+* {
+  scrollbar-width: none; 
+  -ms-overflow-style: none;
+}
+
+*::-webkit-scrollbar {
+  display: none; 
+}
+
+

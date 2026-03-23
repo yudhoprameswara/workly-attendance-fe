@@ -71,7 +71,7 @@ const DashboardPage = () => {
     const minutes = time.getMinutes();
 
     const checkInInMinutes = hours * 60 + minutes;
-    const targetInMinutes = 8 * 60 + 30; 
+    const targetInMinutes = 8 * 60 + 30;
     const toleranceInMinutes = targetInMinutes + 15;
 
     if (checkInInMinutes <= targetInMinutes) {
@@ -216,6 +216,17 @@ const DashboardPage = () => {
     return () => clearInterval(timer);
   }, [userStore?.id]);
 
+  const handleGmailClick = () => {
+    const email = "workly.admin@yopmail.com";
+    const subject = encodeURIComponent("Bantuan Presensi - Workly");
+    const body = encodeURIComponent(
+     `Halo Admin,\n\nSaya ${userStore.name} dengan ID [${userStore.id}] ingin bertanya mengenai...`,
+    );
+
+    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${email}&su=${subject}&body=${body}`;
+
+    window.open(gmailUrl, "_blank");
+  };
   const statCards = [
     {
       title: "Waktu Sekarang",
@@ -402,63 +413,84 @@ const DashboardPage = () => {
           </div>
         </div>
 
-       <div className="lg:col-span-4 flex flex-col gap-6">
-  <div className="bg-white border border-neutral-100 rounded-[2.5rem] p-8 shadow-[0_20px_50px_rgba(0,0,0,0.02)] flex-1 flex flex-col justify-between relative overflow-hidden">
-    {/* Dekorasi Background Halus */}
-    <div className="absolute -top-10 -right-10 w-32 h-32 bg-blue-50 rounded-full blur-3xl opacity-50" />
-    
-    <div className="relative z-10">
-      <div className="w-12 h-12 bg-blue-50 rounded-2xl flex items-center justify-center mb-6">
-        <Timer className="text-blue-600" size={24} />
-      </div>
-      
-      <h4 className="text-xl font-black uppercase italic tracking-tighter text-neutral-900 mb-6">
-        Jadwal <span className="text-blue-600">Shift</span>
-      </h4>
-      
-      <div className="space-y-5">
-        {/* Jam Masuk */}
-        <div className="group flex justify-between items-center p-4 rounded-2xl bg-slate-50 border border-transparent hover:border-blue-100 hover:bg-white transition-all duration-300">
-          <div className="flex flex-col">
-            <span className="text-[9px] font-black uppercase text-neutral-400 tracking-widest">Jam Masuk</span>
-            <span className="text-lg font-black text-neutral-800">08:30 <span className="text-xs font-medium text-neutral-400">WIB</span></span>
+        <div className="lg:col-span-4 flex flex-col gap-6">
+          <div className="bg-white border border-neutral-100 rounded-[2.5rem] p-8 shadow-[0_20px_50px_rgba(0,0,0,0.02)] flex-1 flex flex-col justify-between relative overflow-hidden">
+            {/* Dekorasi Background Halus */}
+            <div className="absolute -top-10 -right-10 w-32 h-32 bg-blue-50 rounded-full blur-3xl opacity-50" />
+
+            <div className="relative z-10">
+              <div className="w-12 h-12 bg-blue-50 rounded-2xl flex items-center justify-center mb-6">
+                <Timer className="text-blue-600" size={24} />
+              </div>
+
+              <h4 className="text-xl font-black uppercase italic tracking-tighter text-neutral-900 mb-6">
+                Jadwal <span className="text-blue-600">Shift</span>
+              </h4>
+
+              <div className="space-y-5">
+                {/* Jam Masuk */}
+                <div className="group flex justify-between items-center p-4 rounded-2xl bg-slate-50 border border-transparent hover:border-blue-100 hover:bg-white transition-all duration-300">
+                  <div className="flex flex-col">
+                    <span className="text-[9px] font-black uppercase text-neutral-400 tracking-widest">
+                      Jam Masuk
+                    </span>
+                    <span className="text-lg font-black text-neutral-800">
+                      08:30{" "}
+                      <span className="text-xs font-medium text-neutral-400">
+                        WIB
+                      </span>
+                    </span>
+                  </div>
+                  <div className="w-10 h-10 rounded-xl bg-green-100/50 flex items-center justify-center">
+                    <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+                  </div>
+                </div>
+
+                {/* Jam Pulang */}
+                <div className="group flex justify-between items-center p-4 rounded-2xl bg-slate-50 border border-transparent hover:border-orange-100 hover:bg-white transition-all duration-300">
+                  <div className="flex flex-col">
+                    <span className="text-[9px] font-black uppercase text-neutral-400 tracking-widest">
+                      Jam Pulang
+                    </span>
+                    <span className="text-lg font-black text-neutral-800">
+                      17:30{" "}
+                      <span className="text-xs font-medium text-neutral-400">
+                        WIB
+                      </span>
+                    </span>
+                  </div>
+                  <div className="w-10 h-10 rounded-xl bg-orange-100/50 flex items-center justify-center">
+                    <div className="w-2 h-2 bg-orange-400 rounded-full" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-8 p-4 bg-blue-50/50 rounded-2xl border border-blue-100/50">
+              <p className="text-[10px] text-blue-700 font-bold leading-relaxed flex gap-2">
+                <Info size={12} className="shrink-0" />
+                <span>
+                  Pastikan melakukan checkout tepat waktu untuk validasi durasi
+                  kerja.
+                </span>
+              </p>
+            </div>
           </div>
-          <div className="w-10 h-10 rounded-xl bg-green-100/50 flex items-center justify-center">
-             <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+
+          <div className="bg-blue-600 rounded-[2.5rem] p-8 text-white flex items-center justify-between group cursor-pointer hover:bg-blue-700 transition-all shadow-lg shadow-blue-100">
+            <div onClick={handleGmailClick}>
+              <p className="text-[10px] font-bold uppercase opacity-70 tracking-widest">
+                Butuh Bantuan?
+              </p>
+              <h4 className="text-lg font-black italic tracking-tighter uppercase">
+                Hubungi HRD
+              </h4>
+            </div>
+            <div className="w-12 h-12 bg-white/20 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
+              <UserCheck size={20} />
+            </div>
           </div>
         </div>
-
-        {/* Jam Pulang */}
-        <div className="group flex justify-between items-center p-4 rounded-2xl bg-slate-50 border border-transparent hover:border-orange-100 hover:bg-white transition-all duration-300">
-          <div className="flex flex-col">
-            <span className="text-[9px] font-black uppercase text-neutral-400 tracking-widest">Jam Pulang</span>
-            <span className="text-lg font-black text-neutral-800">17:30 <span className="text-xs font-medium text-neutral-400">WIB</span></span>
-          </div>
-          <div className="w-10 h-10 rounded-xl bg-orange-100/50 flex items-center justify-center">
-             <div className="w-2 h-2 bg-orange-400 rounded-full" />
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div className="mt-8 p-4 bg-blue-50/50 rounded-2xl border border-blue-100/50">
-      <p className="text-[10px] text-blue-700 font-bold leading-relaxed flex gap-2">
-        <Info size={12} className="shrink-0" />
-        <span>Pastikan melakukan checkout tepat waktu untuk validasi durasi kerja.</span>
-      </p>
-    </div>
-  </div>
-
-  <div className="bg-blue-600 rounded-[2.5rem] p-8 text-white flex items-center justify-between group cursor-pointer hover:bg-blue-700 transition-all shadow-lg shadow-blue-100">
-    <div>
-      <p className="text-[10px] font-bold uppercase opacity-70 tracking-widest">Butuh Bantuan?</p>
-      <h4 className="text-lg font-black italic tracking-tighter uppercase">Hubungi HRD</h4>
-    </div>
-    <div className="w-12 h-12 bg-white/20 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
-      <UserCheck size={20} />
-    </div>
-  </div>
-</div>
       </div>
 
       {error && (
