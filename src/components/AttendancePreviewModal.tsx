@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect } from "react";
+import { useCallback, useState, useEffect } from "react";
 import {
   X,
   MapPin,
@@ -11,7 +11,6 @@ import {
   GoogleMap,
   useJsApiLoader,
   MarkerF,
-  Polyline,
 } from "@react-google-maps/api";
 import { AttendanceDetail } from "../pages/AttendancePage";
 const formatTime = (dateString: string) => {

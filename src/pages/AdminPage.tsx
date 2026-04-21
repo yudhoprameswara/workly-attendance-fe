@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import {
   UserPlus,
   Trash2,
@@ -15,8 +15,7 @@ import UserFormModal from "../components/UserFormModal";
 const AdminPage = () => {
   const [users, setUsers] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
+  const [, setError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [roleFilter, setRoleFilter] = useState("");
   const [titleFilter, setTitleFilter] = useState("");
@@ -102,8 +101,8 @@ const AdminPage = () => {
   };
 
   const handleEdit = (user: any) => {
-    if(user.role === ''){
-      user.role = 'user'
+    if (user.role === "") {
+      user.role = "user";
     }
     setSelectedUser(user);
     setIsFormModalOpen(true);
@@ -292,7 +291,7 @@ const AdminPage = () => {
                             : "bg-green-50 text-green-600 border-green-100"
                         }`}
                       >
-                        {user.role || 'Belum di Set'}
+                        {user.role || "Belum di Set"}
                       </span>
                     </td>
                     <td className="px-6 py-4 text-center">

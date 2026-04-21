@@ -6,7 +6,6 @@ import {
   ArrowRight,
   Calendar as CalendarIcon,
   CheckCircle2,
-  MapPinCheckInside,
 } from "lucide-react";
 
 interface Attendance {

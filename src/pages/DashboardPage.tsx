@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
   Clock,
   MapPinCheckInside,
@@ -9,7 +9,6 @@ import {
   LogIn,
   LogOut,
   Info,
-  Bell,
   Fingerprint,
 } from "lucide-react";
 import { useAuthStore } from "../store/authStore";

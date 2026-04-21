@@ -1,5 +1,5 @@
 import { CalendarIcon, List } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "react-calendar/dist/Calendar.css";
 import ListView from "../components/ListView";
 import CalendarView from "../components/CalendarView";
@@ -30,7 +30,7 @@ const AttendanceHistory = () => {
   }, [userStore?.id]);
 
   return (
-    <div className="p-6 overflow-hidden"> 
+    <div className="p-6 overflow-hidden">
       <div className="flex justify-between mb-6">
         <div className="flex bg-neutral-100 rounded-2xl p-1.5 shadow-inner">
           <button
@@ -60,9 +60,9 @@ const AttendanceHistory = () => {
       </div>
 
       <div className="relative">
-        <AnimatePresence mode="wait"> 
+        <AnimatePresence mode="wait">
           <motion.div
-            key={viewMode} 
+            key={viewMode}
             initial={{ opacity: 0, x: viewMode === "list" ? -20 : 20 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: viewMode === "list" ? 20 : -20 }}
